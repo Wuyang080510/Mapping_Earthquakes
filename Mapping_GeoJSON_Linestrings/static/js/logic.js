@@ -36,20 +36,40 @@ L.control.layers(baseMaps).addTo(map);
 // // Then we add our tile layer to the map.
 // streets.addTo(map);
 
-// Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/Wuyang080510/Mapping_Earthquakes/main/majorAirports.json";
+//Accessing the toronto airline dataset URL
+let torontoData = "https://raw.githubusercontent.com/Wuyang080510/Mapping_Earthquakes/main/torontoRoutes.json"
+// // Accessing the airport GeoJSON URL
+// let airportData = "https://raw.githubusercontent.com/Wuyang080510/Mapping_Earthquakes/main/majorAirports.json";
 
-// Grabbing out GeoJson data
-d3.json(airportData).then(function(data) {
+// Create a style for the lines
+let myStyle = {
+    color: "#ffffa1",
+    weight: 2
+}
+// Grabbing our GeoJSON data
+d3.json(torontoData).then(function(data) {
     console.log(data);
-    // Create a GeoJSON layer with the retrieved data
     L.geoJSON(data, {
-        pointToLayer: function(feature, latlng) {
-            console.log(feature);
-            return L.marker(latlng).bindPopup("<h2>" + feature.properties.name + "</h2>")
+        style: myStyle,
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("<h3>Airline: " + feature.properties.airline + "</h3> <hr><h3>Destination: " + 
+            feature.properties.dst + "</h3>");
         }
-}).addTo(map);
-})
+    })
+    .addTo(map);
+});
+
+// // Grabbing out GeoJson data
+// d3.json(airportData).then(function(data) {
+//     console.log(data);
+//     // Create a GeoJSON layer with the retrieved data
+//     L.geoJSON(data, {
+//         pointToLayer: function(feature, latlng) {
+//             console.log(feature);
+//             return L.marker(latlng).bindPopup("<h2>" + feature.properties.name + "</h2>")
+//         }
+// }).addTo(map);
+// })
 // Add GeoJSON object to the map through GeoJSON layer L.geoJSON()
 // L.geoJSON(sanFranAirport, {
 //     // we turn each feature into a marker on the map.
