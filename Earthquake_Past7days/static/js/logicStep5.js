@@ -100,7 +100,7 @@ d3.json(Earthquakes_past7days).then(function(data) {
     // Create a legend control object
     var legend = L.control({position: 'bottomright'});
     // Add all the details for the legend
-    legend.onAdd = function (map) {
+    legend.onAdd = function () {
         let div = L.DomUtil.create("div", "info legend");
         const magnitudes = [0, 1, 2, 3, 4, 5];
         const colors = [
@@ -115,8 +115,8 @@ d3.json(Earthquakes_past7days).then(function(data) {
         for (var i=0; i<magnitudes.length; i++) {
             console.log(colors[i]);
             div.innerHTML += 
-            "<i style = 'background: " + colors[i] + "'></i>" + 
-            magnitudes[i] + (magnitudes[i+1]? "&ndash;" + magnitudes[i+1] + "<br>" : "+");
+                "<i style = 'background: " + colors[i] + "'></i>" + 
+                magnitudes[i] + (magnitudes[i+1]? "&ndash;" + magnitudes[i+1] + "<br>" : "+");
         }
         return div;
     };
